@@ -1,0 +1,28 @@
+{
+  "name": "devtinder",
+  "version": "1.0.0",
+  "description": "Tinder for devs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dhanunjay-gif/DevTinder.git"
+  },
+  "keywords": [
+    "nodejs",
+    "javaScript"
+  ],
+  "author": "Dhanunjay Boya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dhanunjay-gif/DevTinder/issues"
+  },
+  "homepage": "https://github.com/Dhanunjay-gif/DevTinder#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
