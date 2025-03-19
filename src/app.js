@@ -2,13 +2,23 @@ const express = require('express')
 
 const app = express()
 
-app.use("/test",(req,res)=>{
-    res.send("Hi Dhanu")
+app.get("/user",(req,res,next)=>{
+    console.log("Handler 1")
+    next()
+    // res.send("Reponse 1")
+},(req,res,next)=>{
+    console.log("Handler 2")
+    res.send("Reponse 2")
+    next()
+},(req,res,next)=>{
+    console.log("Handler 3")
+    res.send("Reponse 3")
 })
 
-app.use("/hello",(req,res)=>{
-    res.send("Hello D Namste From darshboard")
-})
+
+// app.use("/",(req,res)=>{
+//     res.send("Home Page")
+// })
 
 const PORT=5000;
 
