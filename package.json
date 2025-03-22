@@ -23,6 +23,9 @@
   },
   "homepage": "https://github.com/Dhanunjay-gif/DevTinder#readme",
   "dependencies": {
-    "express": "^4.21.2"
+    "bcrypt": "^5.1.1",
+    "express": "^4.21.2",
+    "mongoose": "^8.12.1",
+    "validator": "^13.12.0"
   }
 }
