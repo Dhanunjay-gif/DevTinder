@@ -1,7 +1,7 @@
 const express = require("express")
 const {connectDB}=require("./config/database")
 const User = require("./models/user");
-const user = require("./models/user");
+// const user = require("./models/user");
 const {validationSignupData} = require("./Validators/validation")
 const bcrypt= require("bcrypt")
 const app =express()
@@ -51,6 +51,24 @@ app.patch("/userData", async (req,res)=>{
     }
 })
 
+app.post("/login", async (req,res)=>{
+    const data = req.body;
+    // const emailId=data.email;
+    // const password=data.password
+    const {email,password} =req.body;
+    const user = await User.findOne({email:email})
+    if(!user){
+        throw new Error("Invalid data")
+    }
+    const isPasswordValid = await bcrypt.compare(password,user.password)
+    if(isPasswordValid){
+        res.send("Login in successfull")
+    }
+    else{
+        throw new Error("Invalid data")
+    }
+})
+
 const serverStart = async ()=>{
     await connectDB()
     app.listen(PORT,(req,res)=>{
@@ -59,3 +77,4 @@ const serverStart = async ()=>{
 }
 
 serverStart()
+ 
