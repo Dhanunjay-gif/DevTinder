@@ -35,8 +35,20 @@ const userSchema = new mongoose.Schema({
                 throw new Error("Gender data not valid")
             }
         }
+    },
+    skills:{
+        type:[String],
+    },
+    about:{
+        type:String
+    },
+    photourl:{
+        type:String,
+        default:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIemW73RZxrQDXt4Pdu8QzGmipXXN7DFmmKg&s"
     }
-},{
+
+},
+{
     timestamps:true
 }
 )
