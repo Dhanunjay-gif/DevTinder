@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken")
 const {userAuth} =require("./middlewares/auth")
 const {authRouter}=require("./router/authRouter")
 const {profileRouter} =require("./router/profileRouter")
+const {requestRouter}=require("./router/requestRouter")
 
 
 const app =express()
@@ -16,6 +17,7 @@ const PORT =5000;
 
 app.use("/", authRouter);
 app.use("/", profileRouter);
+app.use("/", requestRouter);
 
 app.post("/sendConnectionRequest",userAuth, async (req,res)=>{
     try{
