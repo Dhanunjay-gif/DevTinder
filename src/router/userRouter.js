@@ -47,4 +47,37 @@ userRouter.get("/user/connections",userAuth,async (req,res)=>{
     }
 })
 
+userRouter.get("/feed",userAuth,async (req,res)=>{
+    try{
+        const loggedInUser=req.user;
+        const page=parseInt(req.query.page) || 1;
+        let limit =parseInt(req.query.limit) || 10;
+        limit= limit>50 ? 50 :limit;
+        const skip=(page-1)*limit
+        const connectionRequest = await ConnectionRequest.find({
+            $or:[
+                {fromUserId:loggedInUser},
+                {toUserId:loggedInUser}
+            ]
+        }).select("fromUserId toUserId")
+
+        const hideUserFromFeed = new Set();
+        connectionRequest.forEach((status)=>{
+            hideUserFromFeed.add(status.fromUserId.toString())
+            hideUserFromFeed.add(status.toUserId.toString())
+        })
+        const users = await User.find({
+            $and:[
+                {_id:{$nin: Array.from(hideUserFromFeed)}},
+                {_id:{$ne :loggedInUser._id}}
+            ]
+        }).select(USER_SAFEDATA).skip(skip).limit(limit)
+
+        res.send(users)
+    }
+    catch(err){
+        res.status(400).send("ERROR :"+err.message)
+    }
+})
+
 module.exports = userRouter;
