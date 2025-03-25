@@ -5,9 +5,10 @@ const bcrypt= require("bcrypt")
 const cookieParser= require("cookie-parser")
 const jwt = require("jsonwebtoken")
 const {userAuth} =require("./middlewares/auth")
-const {authRouter}=require("./router/authRouter")
-const {profileRouter} =require("./router/profileRouter")
-const {requestRouter}=require("./router/requestRouter")
+const authRouter=require("./router/authRouter")
+const profileRouter =require("./router/profileRouter")
+const requestRouter=require("./router/requestRouter")
+const userRouter=require("./router/userRouter")
 
 
 const app =express()
@@ -18,6 +19,7 @@ const PORT =5000;
 app.use("/", authRouter);
 app.use("/", profileRouter);
 app.use("/", requestRouter);
+app.use("/", userRouter);
 
 app.post("/sendConnectionRequest",userAuth, async (req,res)=>{
     try{
