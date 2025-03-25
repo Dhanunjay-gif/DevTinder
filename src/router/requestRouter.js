@@ -31,7 +31,6 @@ requestRouter.post("/request/send/:status/:toUserId", userAuth, async (req,res)=
                 {fromUserId:toUserId,toUserId:fromUserId}
             ]
         })
-
         if(existingConnectionrequest){
             return res.status(400).json({message:"connection request already exist"})
         }
@@ -59,16 +58,16 @@ requestRouter.post("/request/review/:status/:requestId",userAuth, async (req,res
         if(!allowedStatus){
             return res.status(400).json({message:"status is not found"});
         }
-        const connectionRequest = await ConnectionRequest.findOne({
+        const connectionRequestExist = await ConnectionRequest.findOne({
             _id:requestId,
             toUserId:loggedInUser._id,
             status:"interested"
         })
-        if(!connectionRequest){
+        if(!connectionRequestExist){
             return res.status(400).json({message:"connection request not found"});
         }
-        connectionRequest.status=status;
-        const data=await connectionRequest.save();
+        connectionRequestExist.status=status;
+        const data=await connectionRequestExist.save();
         res.json({message:"connection request "+status,data})
     } 
     catch(err){
