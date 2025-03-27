@@ -23,7 +23,7 @@ authRouter.post("/login", async (req,res)=>{
         res.cookie("token",token,{
             expires: new Date(Date.now()+8*24*60*60*1000)
         })
-        res.send("Login in successfully as :"+ user)
+        res.send(user)
     }
     else{
         throw new Error("Invalid data")  
