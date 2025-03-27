@@ -8,27 +8,28 @@ const {validationSignupData} = require("../Validators/validation")
 const authRouter = express.Router();
 
 
-authRouter.post("/login", async (req,res)=>{
-    const data = req.body;
-    // const emailId=data.email;
-    // const password=data.password
-    const {email,password} =req.body;
-    const user = await User.findOne({email:email}) 
-    if(!user){
-        throw new Error("Invalid data") 
+authRouter.post("/login", async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email: email });
+        if (!user) {
+            return res.status(401).json({ message: "Invalid email or password" });
+        }
+        const isPasswordValid = await user.validatePassword(password);
+        if (!isPasswordValid) {
+            return res.status(400).json({ message: "Invalid email or password" });
+        }
+        const token = await user.getJWT();
+        res.cookie("token", token, {
+            expires: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000),
+            httpOnly: true,
+        });
+        res.send(user);
+    } catch (error) {
+        console.error("Login Error:", error.message);
+        res.status(500).json({ message: "Internal server error" });
     }
-    const isPasswordValid = await user.validatePassword(password)
-    if(isPasswordValid){
-        const token = await user.getJWT(); 
-        res.cookie("token",token,{
-            expires: new Date(Date.now()+8*24*60*60*1000)
-        })
-        res.send(user)
-    }
-    else{
-        throw new Error("Invalid data")  
-    }
-})
+});
 
 
 authRouter.post("/signup",async (req,res)=>{

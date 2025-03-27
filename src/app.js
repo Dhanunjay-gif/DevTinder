@@ -15,8 +15,6 @@ const app =express()
 app.use(cors({
     origin: "http://localhost:5173", // Change to your frontend port
     credentials: true,
-    methods: ["GET", "POST", "PATCH"], 
-    allowedHeaders: ["Content-Type", "Authorization"] 
 }));
 
 app.use(express.json()) 
