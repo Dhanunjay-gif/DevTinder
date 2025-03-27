@@ -9,16 +9,23 @@ const authRouter=require("./router/authRouter")
 const profileRouter =require("./router/profileRouter")
 const requestRouter=require("./router/requestRouter")
 const userRouter=require("./router/userRouter")
+const cors=require('cors')
 
+const app =express() 
+app.use(cors({
+    origin: "http://localhost:5173", // Change to your frontend port
+    credentials: true,
+    methods: ["GET", "POST", "PATCH"], 
+    allowedHeaders: ["Content-Type", "Authorization"] 
+}));
 
-const app =express()
-app.use(express.json())
+app.use(express.json()) 
 app.use(cookieParser())
 const PORT =5000;
-
+   
 app.use("/", authRouter);
 app.use("/", profileRouter);
-app.use("/", requestRouter);
+app.use("/", requestRouter); 
 app.use("/", userRouter);
 
 app.post("/sendConnectionRequest",userAuth, async (req,res)=>{

@@ -13,22 +13,23 @@ authRouter.post("/login", async (req,res)=>{
     // const emailId=data.email;
     // const password=data.password
     const {email,password} =req.body;
-    const user = await User.findOne({email:email})
+    const user = await User.findOne({email:email}) 
     if(!user){
         throw new Error("Invalid data") 
     }
     const isPasswordValid = await user.validatePassword(password)
     if(isPasswordValid){
-        const token = await user.getJWT();
+        const token = await user.getJWT(); 
         res.cookie("token",token,{
             expires: new Date(Date.now()+8*24*60*60*1000)
         })
-        res.send("Login in successfully as :"+ user.firstName)
+        res.send("Login in successfully as :"+ user)
     }
     else{
-        throw new Error("Invalid data") 
+        throw new Error("Invalid data")  
     }
 })
+
 
 authRouter.post("/signup",async (req,res)=>{
     const data = req.body;
