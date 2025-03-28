@@ -35,7 +35,6 @@ app.post("/sendConnectionRequest",userAuth, async (req,res)=>{
         if(!user){
             throw new Error("user not found")
         }
-        console.log(`${user.firstName} sent connection request`)
         res.send(`${user.firstName} sent connection request`) 
     }
     catch(error){
@@ -55,10 +54,9 @@ app.patch("/userData", async (req,res)=>{
         })
         if(user.length===0){
             res.status(404).send("User not found")
-            console.log("User not found")
+
         }
         else{
-            console.log("user data ",user)
             res.send(user)
         }
     }

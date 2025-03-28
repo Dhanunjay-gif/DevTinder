@@ -5,7 +5,7 @@ const User = require("../models/user");
 
 const userRouter = express.Router();
 
-const USER_SAFEDATA = "firstName lastName age about photourl skills"
+const USER_SAFEDATA = "firstName lastName age about photourl skills gender"
 
 userRouter.get("/user/requests/recieved", userAuth, async (req,res)=>{
     try{
@@ -20,7 +20,6 @@ userRouter.get("/user/requests/recieved", userAuth, async (req,res)=>{
         })
     }
     catch(err){
-        console.log(err)
         res.status(400).send("Error :"+err.message);
     }
 })
@@ -34,11 +33,12 @@ userRouter.get("/user/connections",userAuth,async (req,res)=>{
                 {fromUserId:loggedInUser._id,status:"accepted"}
             ]
         }).populate("fromUserId",USER_SAFEDATA).populate("toUserId",USER_SAFEDATA);
+
         const data= connectionRequestExist.map((row)=>{
             if(row.fromUserId._id.toString()===row.toUserId._id.toString()){
-                return row.toUserId;
+                return row.fromUserId;
             }
-            return row.fromUserId;
+            return row.toUserId;
         })
         res.json({data})
     }
