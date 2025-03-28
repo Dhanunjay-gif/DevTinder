@@ -13,11 +13,14 @@ const cors=require('cors')
 
 const app =express() 
 app.use(cors({
-    origin: "http://localhost:5173", // Change to your frontend port
+    origin: "http://localhost:5173",
     credentials: true,
+    methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'], 
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(express.json()) 
+
 app.use(cookieParser())
 const PORT =5000;
    
