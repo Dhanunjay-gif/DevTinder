@@ -33,6 +33,7 @@ authRouter.post("/login", async (req, res) => {
 
 
 authRouter.post("/signup",async (req,res)=>{
+    try{
     const data = req.body;
     validationSignupData(req)
     const {firstName,lastName,email,password,age,gender,skills,about}= req.body;
@@ -49,7 +50,13 @@ authRouter.post("/signup",async (req,res)=>{
     }
     ) 
     await user.save()
-    res.send("User data is posted")
+    res.json({message:"User data saved successfully",
+        data:user
+    })
+}
+catch(err){
+    res.status(400).send("Error :"+err.message);
+}
 })
 
 authRouter.post("/logout", async (req,res)=>{

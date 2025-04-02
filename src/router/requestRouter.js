@@ -59,7 +59,7 @@ requestRouter.post("/request/review/:status/:requestId",userAuth, async (req,res
             return res.status(400).json({message:"status is not found"});
         }
         const connectionRequestExist = await ConnectionRequest.findOne({
-            _id:requestId,
+            fromUserId:requestId,
             toUserId:loggedInUser._id,
             status:"interested"
         })

@@ -46,7 +46,7 @@ const userSchema = new mongoose.Schema({
     },
     photourl:{
         type:String,
-        default:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIemW73RZxrQDXt4Pdu8QzGmipXXN7DFmmKg&s"
+        default:"https://www.shutterstock.com/shutterstock/photos/1760295569/display_1500/stock-vector-profile-picture-avatar-icon-vector-1760295569.jpg"
     }
 
 },
